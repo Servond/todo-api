@@ -16,7 +16,7 @@ export class AuthAction {
   authQuery = Container.get(AuthQuery);
   userQuery = Container.get(UserQuery);
 
-  public registerAction = async ({ email, password }: Auth) => {
+  public registerAction = async ({ email, password, avatar }: Auth) => {
     try {
       const findUser = await this.userQuery.getUserByEmail(email);
 
@@ -26,7 +26,11 @@ export class AuthAction {
       const salt = await genSalt(10);
       const hashPass = await hash(password, salt);
 
-      const result = await this.authQuery.registerQuery(email, hashPass);
+      const result = await this.authQuery.registerQuery(
+        email,
+        hashPass,
+        avatar
+      );
 
       return result;
     } catch (err) {
@@ -48,6 +52,7 @@ export class AuthAction {
       const payload = {
         email: findUser.email,
         isVerified: findUser.isVerified,
+        avatar: findUser.avatar,
       };
 
       const token = sign(payload, String(API_KEY), { expiresIn: "1hr" });
@@ -67,6 +72,7 @@ export class AuthAction {
       const payload = {
         email: findUser.email,
         isVerified: findUser.isVerified,
+        avatar: findUser.avatar,
       };
 
       const token = sign(payload, String(API_KEY), { expiresIn: "1hr" });

@@ -21,7 +21,7 @@ export class AuthQuery {
       const token = sign(payload, String(API_KEY), {
         expiresIn: "1hr",
       });
-      
+
       const templatePath = path.join(
         __dirname,
         "../templates",
@@ -49,7 +49,8 @@ export class AuthQuery {
 
   public registerQuery = async (
     email: string,
-    password: string
+    password: string,
+    avatar: string
   ): Promise<User> => {
     try {
       const t = await prisma.$transaction(async (prisma) => {
@@ -58,6 +59,7 @@ export class AuthQuery {
             data: {
               email,
               password,
+              avatar,
               isVerified: false,
             },
           });

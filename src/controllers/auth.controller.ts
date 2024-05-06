@@ -14,9 +14,15 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
+      const { file } = req;
       const { email, password }: Auth = req.body;
+      console.log(file);
 
-      const result = await this.auth.registerAction({ email, password });
+      const result = await this.auth.registerAction({
+        email,
+        password,
+        avatar: file?.filename,
+      });
 
       res.status(200).json({
         message: "Register success",

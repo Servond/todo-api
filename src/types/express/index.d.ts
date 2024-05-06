@@ -1,6 +1,7 @@
 export type User = {
   userId: number;
   email: string;
+  avatar: string;
   isVerified: boolean;
 };
 

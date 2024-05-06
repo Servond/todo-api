@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import express, { json, Express } from "express";
 import cors from "cors";
+import path from "path";
 
 import { Routes } from "./interfaces/routes.interface";
 import { ErrorMiddleware } from "./middlewares/error.middleware";
@@ -20,6 +21,7 @@ export default class App {
   private initializeMiddleware(): void {
     this.app.use(cors());
     this.app.use(json());
+    this.app.use("/images", express.static(path.join(__dirname, "public")));
   }
 
   private initializeRoutes(routes: Routes[]) {

@@ -2,6 +2,7 @@ import { AuthController } from "@/controllers/auth.controller";
 import { Routes } from "@/interfaces/routes.interface";
 import { AuthMiddleware } from "@/middlewares/auth.middleware";
 import { Router } from "express";
+import { uploader } from "@/helpers/uploader";
 
 export class AuthRoute implements Routes {
   router: Router;
@@ -18,7 +19,11 @@ export class AuthRoute implements Routes {
   }
 
   private initializeRoutes(): void {
-    this.router.post(`${this.path}/register`, this.Auth.registerController);
+    this.router.post(
+      `${this.path}/register`,
+      uploader("avatar", "/avatar").single("file"),
+      this.Auth.registerController
+    );
     this.router.post(`${this.path}/login`, this.Auth.loginController);
     this.router.get(
       `${this.path}/verify`,
