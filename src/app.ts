@@ -21,6 +21,11 @@ export default class App {
   private initializeMiddleware(): void {
     this.app.use(cors());
     this.app.use(json());
+    // untuk bisa menampilkan gambar di front end, gunakan express.static ke folder image kalian
+    // sesuaikan dengan nama folder, contoh nama folder image saya adalah public maka menggunakan
+    // express.static(express.static(path.join(__dirname, "public"))
+    // jika ada request masuk ke api url / images contoh http://localhost:8080/images/avatar
+    // maka express static akan mengarahkan ke folder public/avatar
     this.app.use("/images", express.static(path.join(__dirname, "public")));
   }
 
