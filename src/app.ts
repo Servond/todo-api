@@ -3,6 +3,7 @@ import express, { json, Express } from "express";
 import cors from "cors";
 import path from "path";
 
+import { startCronJob } from "./utils/scheduler";
 import { Routes } from "./interfaces/routes.interface";
 import { ErrorMiddleware } from "./middlewares/error.middleware";
 
@@ -15,6 +16,7 @@ export default class App {
     this.port = 8080;
     this.initializeMiddleware();
     this.initializeRoutes(routes);
+    this.initializeScheduler();
     this.initializeErrorHandling();
   }
 
@@ -24,9 +26,13 @@ export default class App {
     // untuk bisa menampilkan gambar di front end, gunakan express.static ke folder image kalian
     // sesuaikan dengan nama folder, contoh nama folder image saya adalah public maka menggunakan
     // express.static(express.static(path.join(__dirname, "public"))
-    // jika ada request masuk ke api url / images contoh http://localhost:8080/images/avatar
+    // jika ada request masuk ke api url / images contoh http://localhost:8080/images/avatar/
     // maka express static akan mengarahkan ke folder public/avatar
     this.app.use("/images", express.static(path.join(__dirname, "public")));
+  }
+
+  public initializeScheduler(): void {
+    startCronJob();
   }
 
   private initializeRoutes(routes: Routes[]) {

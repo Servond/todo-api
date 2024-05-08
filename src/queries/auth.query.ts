@@ -96,4 +96,25 @@ export class AuthQuery {
       throw err;
     }
   };
+
+  public updateIsVerified = async (): Promise<void> => {
+    try {
+      await prisma.$transaction(async (prisma) => {
+        try {
+          await prisma.user.updateMany({
+            data: {
+              isVerified: false,
+            },
+            where: {
+              isVerified: true,
+            },
+          });
+        } catch (err) {
+          throw err;
+        }
+      });
+    } catch (err) {
+      throw err;
+    }
+  };
 }

@@ -13,6 +13,7 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "strict": false,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
@@ -21,7 +22,7 @@
     "module": "commonjs",
     "pretty": true,
     "sourceMap": true,
-    "declaration": true,
+    "declaration": true,  
     "outDir": "dist",
     "allowJs": true,
     "noEmit": false,
